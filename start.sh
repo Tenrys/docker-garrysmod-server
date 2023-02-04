@@ -4,35 +4,34 @@
 # cd gmod-docker
 # docker build -t gmod:1 .
 
-mkdir -p volume ; cd volume
+mkdir -p volume ; pushd volume
 mkdir -p addons data luabin gmas
-touch sv.db
+touch sv.db &>/dev/null
 
-chown 999:999 sv.db data/ gmas/
+sudo chown 999:999 sv.db data/ gmas/
 
-if [ ! -d "darkrp" ]; then
-	echo "Installing DarkRP"
-	git clone https://github.com/FPtje/DarkRP.git darkrp
-fi
+# if [ ! -d "darkrp" ]; then
+# 	echo "Installing DarkRP"
+# 	git clone https://github.com/FPtje/DarkRP.git darkrp
+# fi
 
+# if [ ! -d "addons/ulx_ulib" ]; then
+# 	echo "Installing Ulx and Ulib"
 
-if [ ! -d "addons/ulx_ulib" ]; then
-	echo "Installing Ulx and Ulib"
+# 	mkdir -p tmp/ulx_ulib
+# 	cd tmp
 
-	mkdir -p tmp/ulx_ulib
-	cd tmp
+# 	git clone 'https://github.com/TeamUlysses/ulx.git'
+# 	git clone 'https://github.com/TeamUlysses/ulib.git'
 
-	git clone 'https://github.com/TeamUlysses/ulx.git'
-	git clone 'https://github.com/TeamUlysses/ulib.git'
+# 	cp -r 'ulx/lua' ulx_ulib/
+# 	cp -r 'ulib/lua' ulx_ulib/
 
-	cp -r 'ulx/lua' ulx_ulib/
-	cp -r 'ulib/lua' ulx_ulib/
+# 	mv ulx_ulib/ ../addons
 
-	mv ulx_ulib/ ../addons
+# 	cd ..
+# 	rm -rf tmp
+# fi
 
-	cd ..
-	rm -rf tmp
-fi
-
-cd .. # exit from /volume
+popd # exit from /volume
 docker-compose up --force-recreate

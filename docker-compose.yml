@@ -3,7 +3,7 @@ version: "2"
 services:
   gmod:
     build:
-        context: .
+      context: .
     command: -port $PORT \
       -tickrate $TICKRATE \
       -maxplayers $PLAYERS \
@@ -14,20 +14,22 @@ services:
     tty: true
     ports:
       - "$PORT:$PORT/udp"
+      - "$PORT:$PORT"
+      - "27005:27005/udp"
     volumes:
       - $PWD/volume/addons:/gmodserv/garrysmod/addons/
       - $PWD/volume/data:/gmodserv/garrysmod/data/
-      - $PWD/volume/darkrp:/gmodserv/garrysmod/gamemodes/darkrp/
+      # - $PWD/volume/darkrp:/gmodserv/garrysmod/gamemodes/darkrp/
       - $PWD/volume/gmas:/gmodserv/garrysmod/cache/srcds/
       - $PWD/volume/luabin:/gmodserv/garrysmod/lua/bin/
       - $PWD/volume/sv.db:/gmodserv/garrysmod/sv.db
     # How to fix that docker shit?
     # https://img.qweqwe.ovh/1532284325896.png
-    hostname: keklol
-    extra_hosts:
-      - keklol:$HOSTIP
-    networks:
-      - gmodnet
+    # hostname: keklol
+    # extra_hosts:
+    #   - keklol:$HOSTIP
+    # networks:
+    #   - gmodnet
 
   #redis:
   #  image: redis
@@ -38,6 +40,5 @@ services:
   #    - "$PWD/redis:/data"
   #  networks:
   #    - gmodnet
-
-networks:
-  gmodnet:
+# networks:
+#   gmodnet:
